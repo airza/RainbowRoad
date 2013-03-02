@@ -1,5 +1,28 @@
+<?
+
+$santitized_chars = array(
+	'&'=>'&amp',
+	'<'=>'&lt;',
+	'>'=>'&gt;',
+	'"'=>'&quot;',
+	"'" =>'&#x27;',
+	'/' => '&#x2F;',
+	);
+if (isset($_REQUEST['text'])) {
+	$text = urldecode($_REQUEST['text']);
+	foreach ($santitized_chars as $char=>$replacement) {
+		$text = stripslashes(utf8_decode(str_replace($char, $replacement, $text)));
+	}
+
+} else {
+	$text = "A GIANT PYRAMID WHERE ONTO THE INSIDE WALLS FOOTAGE OF EVERY TIME YOU SHOULD'VE KISSED SOMEONE, BUT DIDN'T, IS PROJECTED. IT PLAYS FOREVER.";
+}
+
+?>
 <html>
 <head>
+	<title>RAINBOW ROAD</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<style type="text/css">
 		#outside[id] {
@@ -11,29 +34,38 @@
 		}
 		#middle[id] {
 			display: table-cell;
+			vertical-align: middle;
 			width: 100%;
-			position: static;
 		}
 		#rainbow-text {
-			margin-left: auto;
-			margin-right: auto;
-			font-size: 70px;
 			text-align: center;
-			font-family: "arial narrow", fantasy;
-			position: absolute;
+			font-size: 70px;
+			font-family: 'Roboto Condensed', sans-serif;
 		}
 		body {
-			background: rgb(73,73,73); /* Old browsers */
-			background: linear-gradient(to bottom, rgba(73,73,73,1) 0%,rgba(40,52,59,1) 100%); /* W3C */
+			background: rgb(69,72,77); /* Old browsers */
+			background: -moz-linear-gradient(top, rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+			background: linear-gradient(to bottom, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+
 		}
 		#spacelord{
 			height:40%;
+		}
+		.hi {
+			font-family: 'Roboto Condensed', sans-serif;
+			color:orange;
+
 		}
 	</style>
 	<script>
 	$(function(){
 		$('#rainbow-input').bind("keyup input paste",function() {
 			$('#rainbow-text').html($(this).val())
+			$('#rainbow-output').val('<?=$_SERVER['HTTP_HOST'];?>/weird.php?text='+encodeURIComponent($(this).val()))
 		})
 	})
 	function cycling_hex_factory(speed) {
@@ -76,14 +108,19 @@
 	<div id="outside">
 		<div id="middle">
 			<div id="rainbow-text">
-				<?= isset($_REQUEST['text']) ? $_REQUEST['text'] :"I'M THE KING OF SPACE"; ?>
+				<?= $text; ?>
 			</div>
 		</div>
 	</div>
 	<div id="spacelord">
 	</div>
-	<textarea id="rainbow-input"></textarea>
-	<textarea id="url"></textarea>
+	<textarea id="rainbow-input">enter text here for MORE FUN</textarea><textarea id="rainbow-output"></textarea><br>
+	<a class="hi" href="https://twitter.com/YUNGLIKEAHORSE/status/297891307391696897">Link to original tweet</a>
+	<br>
+	<a class="hi" href="https://github.com/airza/RainbowRoad">Github (why would you want this, christ)</a>
+	<br>
+<a href="https://twitter.com/airzae" class="twitter-follow-button" data-show-count="false">Follow @airzae</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 
 </html>
