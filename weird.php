@@ -11,8 +11,9 @@ $santitized_chars = array(
 if (isset($_REQUEST['text'])) {
 	$text = urldecode($_REQUEST['text']);
 	foreach ($santitized_chars as $char=>$replacement) {
-		$text = stripslashes(utf8_decode(str_replace($char, $replacement, $text)));
+		$text = str_replace($char, $replacement, $text);
 	}
+	$text = stripslashes(utf8_decode($text));
 
 } else {
 	$text = "A GIANT PYRAMID WHERE ONTO THE INSIDE WALLS FOOTAGE OF EVERY TIME YOU SHOULD'VE KISSED SOMEONE, BUT DIDN'T, IS PROJECTED. IT PLAYS FOREVER.";
@@ -21,6 +22,7 @@ if (isset($_REQUEST['text'])) {
 ?>
 <html>
 <head>
+	<meta chartset="utf-8">
 	<title>RAINBOW ROAD</title>
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -59,6 +61,12 @@ if (isset($_REQUEST['text'])) {
 			font-family: 'Roboto Condensed', sans-serif;
 			color:orange;
 
+		}
+		textarea {
+			font-size:20px;
+			width:40%;
+			background-color: #333333;
+			color:white;
 		}
 	</style>
 	<script>
@@ -114,8 +122,10 @@ if (isset($_REQUEST['text'])) {
 	</div>
 	<div id="spacelord">
 	</div>
-	<textarea id="rainbow-input">enter text here for MORE FUN</textarea><textarea id="rainbow-output"></textarea><br>
+	<textarea id="rainbow-input">enter text here for MORE FUN</textarea><textarea readonly="readonly" id="rainbow-output"></textarea><br>
+	<? if (!isset($_REQUEST['text'])) { ?>
 	<a class="hi" href="https://twitter.com/YUNGLIKEAHORSE/status/297891307391696897">Link to original tweet</a>
+	<? } ?>
 	<br>
 	<a class="hi" href="https://github.com/airza/RainbowRoad">Github (why would you want this, christ)</a>
 	<br>
