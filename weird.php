@@ -18,7 +18,14 @@ if (isset($_REQUEST['text'])) {
 } else {
 	$text = "A GIANT PYRAMID WHERE ONTO THE INSIDE WALLS FOOTAGE OF EVERY TIME YOU SHOULD'VE KISSED SOMEONE, BUT DIDN'T, IS PROJECTED. IT PLAYS FOREVER.";
 }
-
+if (isset($_REQUEST['tweet_url'])) {
+	$pattern = "~^https?:[/]{2}twitter.com[/][0-9a-zA-Z_]+[/]status[/][0-9]+$~i";
+	error_log("MATCH:".preg_match($pattern, urldecode($_REQUEST['tweet_url'])));
+	error_log("URL:".urldecode($_REQUEST['tweet_url']));
+	if (preg_match($pattern, urldecode($_REQUEST['tweet_url'])) === 1) {
+		$text = "<a href='".$_REQUEST['tweet_url']."'>".$text."</a>";
+	}
+}
 ?>
 <html>
 <head>
@@ -44,6 +51,18 @@ if (isset($_REQUEST['text'])) {
 			font-size: 70px;
 			font-family: 'Roboto Condensed', sans-serif;
 		}
+		#rainbow-text a {
+			text-decoration: none;
+			color:inherit;
+		}
+		#rainbow-text a:hover {
+			text-decoration: none;
+			color:inherit;
+		}
+		#rainbow-text a:visited{
+			text-decoration: none;
+			color:inherit;
+		}
 		body {
 			background: rgb(69,72,77); /* Old browsers */
 			background: -moz-linear-gradient(top, rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
@@ -57,11 +76,12 @@ if (isset($_REQUEST['text'])) {
 		#spacelord{
 			height:40%;
 		}
-		.hi {
+		h3, .hi {
 			font-family: 'Roboto Condensed', sans-serif;
 			color:orange;
 
 		}
+
 		textarea {
 			font-size:20px;
 			width:40%;
@@ -70,22 +90,29 @@ if (isset($_REQUEST['text'])) {
 		}
 	</style>
 	<script>
+	twitter_url_regex = /^https?:[/]{2}twitter.com[/][\w]+[/]status[/][0-9]+$/
 	$(function(){
 		$('#rainbow-input').bind("keyup input paste",function() {
 			$('#rainbow-text').html($(this).val())
-			$('#rainbow-output').val('<?=$_SERVER['HTTP_HOST'];?>/weird.php?text='+encodeURIComponent($(this).val()))
+		})
+		$('.url-builder').bind("keyup input paste",function() {
+			base_url = '<?=$_SERVER['HTTP_HOST'];?>'
+			base_url += '/weird.php?text='+encodeURIComponent( $('#rainbow-input').val() );
+			if (twitter_url_regex.test( $('#twitter-link').val() ) ) {
+				base_url += '&tweet_url='+encodeURIComponent($('#twitter-link').val());
+			}
+			$('#output-link').val(base_url);
 		})
 	})
 	function cycling_hex_factory(speed) {
 
 		return function(x) {
-			//remember, math is a forest you can it's okay down with your friends
+			//remember, math is a forest it's okay to burn down with your friends
 			return Math.ceil((256/2) * Math.sin (x * speed) + 127 )
 		}
 	}
 	pipi =(2*Math.PI)
 	//cache values so this isn't incredibly INCREDIBLY slow
-	//also use coprime values for maximum combination of rainbows
 	r = cycling_hex_factory((pipi/100) * 2)
 	g = cycling_hex_factory((pipi/100) * 3)
 	b = cycling_hex_factory((pipi/100) * 5)
@@ -122,7 +149,13 @@ if (isset($_REQUEST['text'])) {
 	</div>
 	<div id="spacelord">
 	</div>
-	<textarea id="rainbow-input">enter text here for MORE FUN</textarea><textarea readonly="readonly" id="rainbow-output"></textarea><br>
+	<h3>enter your own text:</h3>
+	<textarea class='url-builder' id="rainbow-input"></textarea><br>
+	<h3>OPTIONAL: PASTE TWITTER LINK HERE</h3>
+	<textarea class='url-builder' id="twitter-link"></textarea><br>
+	<h3>Link:</h3>
+	<textarea readonly="readonly" id="output-link"></textarea><br>
+
 	<? if (!isset($_REQUEST['text'])) { ?>
 	<a class="hi" href="https://twitter.com/YUNGLIKEAHORSE/status/297891307391696897">Link to original tweet</a>
 	<? } ?>
