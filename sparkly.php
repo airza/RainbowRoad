@@ -11,13 +11,16 @@
 		}
 		#middle[id] {
 			display: table-cell;
-			vertical-align: middle;
 			width: 100%;
+			position: static;
 		}
 		#rainbow-text {
-			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
 			font-size: 70px;
+			text-align: center;
 			font-family: "arial narrow", fantasy;
+			position: absolute;
 		}
 		body {
 			background: rgb(73,73,73); /* Old browsers */
@@ -73,7 +76,7 @@
 	<div id="outside">
 		<div id="middle">
 			<div id="rainbow-text">
-				wrwerwerwerwerw
+				<?= isset($_REQUEST['text']) ? $_REQUEST['text'] :"I'M THE KING OF SPACE"; ?>
 			</div>
 		</div>
 	</div>
