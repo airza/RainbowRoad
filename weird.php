@@ -58,6 +58,7 @@ if (isset($_REQUEST['tweet_url'])) {
 		#rainbow-text a:hover {
 			text-decoration: none;
 			color:inherit;
+			cursor:crosshair;
 		}
 		#rainbow-text a:visited{
 			text-decoration: none;
