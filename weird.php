@@ -154,7 +154,7 @@ if (isset($_REQUEST['tweet_url'])) {
 	<textarea class='url-builder' id="rainbow-input"></textarea><br>
 	<h3>OPTIONAL: PASTE TWITTER LINK HERE</h3>
 	<textarea class='url-builder' id="twitter-link"></textarea><br>
-	<h3>Link:</h3>
+	<h3>Link (copy to clipboard) :</h3>
 	<textarea readonly="readonly" id="output-link"></textarea><br>
 
 	<? if (!isset($_REQUEST['text'])) { ?>
