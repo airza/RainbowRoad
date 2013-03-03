@@ -94,7 +94,7 @@ if (isset($_REQUEST['tweet_url'])) {
 	<script>
 	$(function() {
 		$('#rainbow-input').bind("keyup input paste",function() {
-			$('.rainbow-text').html($(this).val())
+			$('#inner').html($(this).val())
 		})
 
 		twitter_url_regex = /^https?:[/]{2}twitter.com[/][\w]+[/]status[/][0-9]+$/
@@ -114,7 +114,7 @@ if (isset($_REQUEST['tweet_url'])) {
 <body>
 	<div id="outside">
 		<div id="middle">
-			<div class="rainbow-text">
+			<div id="inner" class="rainbow-text">
 				<?= $text; ?>
 			</div>
 		</div>
