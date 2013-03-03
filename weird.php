@@ -113,15 +113,16 @@ if (isset($_REQUEST['tweet_url'])) {
 		}
 	}
 	pipi =(2*Math.PI)
+	fps = 50
 	//cache values so this isn't incredibly INCREDIBLY slow
-	r = cycling_hex_factory((pipi/100) * 2)
-	g = cycling_hex_factory((pipi/100) * 3)
-	b = cycling_hex_factory((pipi/100) * 5)
+	r = cycling_hex_factory((pipi/fps) * 2)
+	g = cycling_hex_factory((pipi/fps) * 3)
+	b = cycling_hex_factory((pipi/fps) * 5)
 	rArr = []
 	gArr = []
 	bArr = []
 	sizeArr = []
-	for(i=0; i<100; i++){
+	for(i=0; i<fps; i++){
 		rArr[i] = r(i)
 		gArr[i] = g(i)
 		bArr[i] = b(i)
@@ -129,14 +130,14 @@ if (isset($_REQUEST['tweet_url'])) {
 	}
 	var count = 0
 	function dancer() {
-		count = (count+1) % 100
+		count = (count+1) % fps
 		colorString = "rgb(" + rArr[count]+ "," + gArr[count] +  ","  + bArr[count] + ")"
 		shadowString = "0px 0px "+ sizeArr[count] +"px " + colorString
 		document.getElementById("rainbow-text").style.color = colorString
 		document.getElementById("rainbow-text").style.textShadow = shadowString
 	}
 
-	window.setInterval(dancer,10);
+	window.setInterval(dancer,1000/fps);
 
 	</script>
 </head>
@@ -154,7 +155,7 @@ if (isset($_REQUEST['tweet_url'])) {
 	<textarea class='url-builder' id="rainbow-input"></textarea><br>
 	<h3>OPTIONAL: PASTE TWITTER LINK HERE</h3>
 	<textarea class='url-builder' id="twitter-link"></textarea><br>
-	<h3>Link (copy to clipboard) :</h3>
+	<h3>Link:</h3>
 	<textarea readonly="readonly" id="output-link"></textarea><br>
 
 	<? if (!isset($_REQUEST['text'])) { ?>
