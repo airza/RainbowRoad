@@ -33,6 +33,7 @@ if (isset($_REQUEST['tweet_url'])) {
 	<title>RAINBOW ROAD</title>
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="weirdBootstrap.js"></script>
 	<style type="text/css">
 		#outside[id] {
 			display: table;
@@ -46,21 +47,21 @@ if (isset($_REQUEST['tweet_url'])) {
 			vertical-align: middle;
 			width: 100%;
 		}
-		#rainbow-text {
+		#middle .rainbow-text {
 			text-align: center;
 			font-size: 70px;
 			font-family: 'Roboto Condensed', sans-serif;
 		}
-		#rainbow-text a {
+		.rainbow-text a {
 			text-decoration: none;
 			color:inherit;
 		}
-		#rainbow-text a:hover {
+		.rainbow-text a:hover {
 			text-decoration: none;
 			color:inherit;
 			cursor:crosshair;
 		}
-		#rainbow-text a:visited{
+		.rainbow-text a:visited{
 			text-decoration: none;
 			color:inherit;
 		}
@@ -91,11 +92,13 @@ if (isset($_REQUEST['tweet_url'])) {
 		}
 	</style>
 	<script>
-	twitter_url_regex = /^https?:[/]{2}twitter.com[/][\w]+[/]status[/][0-9]+$/
-	$(function(){
+	$(function() {
 		$('#rainbow-input').bind("keyup input paste",function() {
-			$('#rainbow-text').html($(this).val())
+			$('.rainbow-text').html($(this).val())
 		})
+
+		twitter_url_regex = /^https?:[/]{2}twitter.com[/][\w]+[/]status[/][0-9]+$/
+
 		$('.url-builder').bind("keyup input paste",function() {
 			base_url = '<?=$_SERVER['HTTP_HOST'];?>'
 			base_url += '/weird.php?text='+encodeURIComponent( $('#rainbow-input').val() );
@@ -105,64 +108,31 @@ if (isset($_REQUEST['tweet_url'])) {
 			$('#output-link').val(base_url);
 		})
 	})
-	function cycling_hex_factory(speed) {
-
-		return function(x) {
-			//remember, math is a forest it's okay to burn down with your friends
-			return Math.ceil((256/2) * Math.sin (x * speed) + 127 )
-		}
-	}
-	pipi =(2*Math.PI)
-	fps = 50
-	//cache values so this isn't incredibly INCREDIBLY slow
-	r = cycling_hex_factory((pipi/fps) * 2)
-	g = cycling_hex_factory((pipi/fps) * 3)
-	b = cycling_hex_factory((pipi/fps) * 5)
-	rArr = []
-	gArr = []
-	bArr = []
-	sizeArr = []
-	for(i=0; i<fps; i++){
-		rArr[i] = r(i)
-		gArr[i] = g(i)
-		bArr[i] = b(i)
-		sizeArr[i] = i%20;
-	}
-	var count = 0
-	function dancer() {
-		count = (count+1) % fps
-		colorString = "rgb(" + rArr[count]+ "," + gArr[count] +  ","  + bArr[count] + ")"
-		shadowString = "0px 0px "+ sizeArr[count] +"px " + colorString
-		document.getElementById("rainbow-text").style.color = colorString
-		document.getElementById("rainbow-text").style.textShadow = shadowString
-	}
-
-	window.setInterval(dancer,1000/fps);
-
 	</script>
+
 </head>
 <body>
 	<div id="outside">
 		<div id="middle">
-			<div id="rainbow-text">
+			<div class="rainbow-text">
 				<?= $text; ?>
 			</div>
 		</div>
 	</div>
 	<div id="spacelord">
 	</div>
-	<h3>enter your own text:</h3>
+	<h3 class="rainbow-text">enter your own text:</h3>
 	<textarea class='url-builder' id="rainbow-input"></textarea><br>
-	<h3>OPTIONAL: PASTE TWITTER LINK HERE</h3>
+	<h3 class="rainbow-text">OPTIONAL: PASTE TWITTER LINK HERE</h3>
 	<textarea class='url-builder' id="twitter-link"></textarea><br>
-	<h3>Link:</h3>
+	<h3 class="rainbow-text">Link:</h3>
 	<textarea readonly="readonly" id="output-link"></textarea><br>
 
 	<? if (!isset($_REQUEST['text'])) { ?>
-	<a class="hi" href="https://twitter.com/YUNGLIKEAHORSE/status/297891307391696897">Link to original tweet</a>
+	<a class="hi rainbow-text" href="https://twitter.com/YUNGLIKEAHORSE/status/297891307391696897">Link to original tweet</a>
 	<? } ?>
 	<br>
-	<a class="hi" href="https://github.com/airza/RainbowRoad">Github (why would you want this, christ)</a>
+	<a class="hi rainbow-text" href="https://github.com/airza/RainbowRoad">Github (why would you want this, christ)</a>
 	<br>
 <a href="https://twitter.com/airzae" class="twitter-follow-button" data-show-count="false">Follow @airzae</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
